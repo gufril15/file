@@ -8,7 +8,7 @@ set streamip ""
 set streamport "8000"
 # your radio server password admin shoutcast2
 set streampass ""
-
+set botnicks "Radio"
 set scplayingtrigger ".playing"
 set sclistenertrigger ".listener"
 set scdjtrigger ".dj"
@@ -268,7 +268,7 @@ proc msg_listener { nick uhost hand arg } { listener $nick }
 proc pub_listener { nick uhost hand chan arg } { global radiochans; if {([lsearch -exact [string tolower $radiochans] [string tolower $chan]] != -1) || ($radiochans == "")} { listener $nick  }}
 
 proc request { nick chan arg } {
-   global dirmp3 isproses 
+   global dirmp3 isproses botnicks 
    if {$isproses == "1"} {putserv "notice $nick :Tunggu sementara proses"; return 0}
    if {$arg == ""} { putserv "notice $nick :ketik .req \[artis\] \[judul\]"; return 0}
    if { [status] == "1" } {
@@ -315,9 +315,9 @@ proc request { nick chan arg } {
             }
          }
          close $fp
-         puthelp "privmsg Radio :!autodj-reload"
-         puthelp "privmsg Radio :!request $juduls.mp3"
-         puthelp "privmsg Radio :!sendreq Current song requested $nick"
+         puthelp "privmsg $botnicks :!autodj-reload"
+         puthelp "privmsg $botnicks :!request $juduls.mp3"
+         puthelp "privmsg $chan :Next song requested $nick"
          putserv "lagu ditambahkan ke antrian."
          set isproses "0"
       }
