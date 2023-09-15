@@ -39,6 +39,7 @@ elif [[ "$arch" == "x86_64" ]]; then
 fi
 
 # Mengunduh dan menginstal ccminer dari branch yang sesuai
+cd ~
 git clone --single-branch -b $branch https://github.com/monkins1010/ccminer.git
 cd ccminer
 
