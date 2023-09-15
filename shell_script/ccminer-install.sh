@@ -7,7 +7,7 @@ if [[ $EUID -eq 0 ]]; then
 else
     # Jika bukan root, periksa jika pengguna memiliki akses sudo
     if command -v sudo >/dev/null; then
-        sudo apt update && sudo apt upgrade -y && apt install libcurl4-openssl-dev libssl-dev libjansson-dev automake autotools-dev build-essential git -y
+        sudo apt update && sudo apt upgrade -y && sudo apt install libcurl4-openssl-dev libssl-dev libjansson-dev automake autotools-dev build-essential git -y
     else
         # Jika tidak ada akses sudo, periksa jika paket-paket sudah terinstal
         required_packages=("libcurl4-openssl-dev" "libssl-dev" "libjansson-dev" "automake" "autotools-dev" "build-essential" "git")
