@@ -15,7 +15,7 @@ else
     if [[ ${#missing_packages[@]} -gt 0 ]]; then
         echo "==================="
         echo "Jika terjadi kesalahan saat proses instalasi, silakan instal paket-paket ini terlebih dahulu."
-        echo "Paket-paket berikut belum terinstal: ${missing_packages[*]}"
+        echo -e "Paket-paket berikut belum terinstal: \e[91m${missing_packages[*]}\e[0m"
         echo "==================="
     fi
 fi
