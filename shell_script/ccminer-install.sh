@@ -20,8 +20,8 @@ else
         done
 
         if [[ ${#missing_packages[@]} -gt 0 ]]; then
-            echo "Paket-paket berikut belum terinstal: ${missing_packages[*]}"
-            echo "Silakan instal paket-paket ini terlebih dahulu."
+            echo "==>  Paket-paket berikut belum terinstal: ${missing_packages[*]}"
+            echo "==>  Silakan instal paket-paket ini terlebih dahulu."
             exit 1
         fi
     fi
@@ -45,51 +45,56 @@ cd ccminer
 
 # Menjalankan build.sh, dan jika ada kesalahan, keluar dengan pesan kesalahan
 if ! bash build.sh; then
-    echo "Error: Gagal menjalankan build.sh."
+    echo "==>  Error: Gagal menjalankan build.sh."
     exit 1
 fi
 
 # Menjalankan make, dan jika ada kesalahan, keluar dengan pesan kesalahan
 if ! make; then
-    echo "Error: Gagal menjalankan make."
+    echo "==>  Error: Gagal menjalankan make."
     exit 1
 fi
 
 cd ~
 
 # Konfigurasi autorun.sh
-echo -e "contoh: \e[92mRW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR\e[0m"
-echo -n "Masukkan WALLETADDRESS: "
+echo -e "==>  contoh: \e[92mRW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR\e[0m"
+echo -n "==>  Masukkan WALLETADDRESS: "
 read wallet
 
-echo -e "contoh: \e[92mvps1\e[0m"
-echo -n "Masukkan nama worker: "
+echo -e "==>  contoh: \e[92mvps1\e[0m"
+echo -n "==>  Masukkan nama worker: "
 read worker
 
-cat <<EOL > autorun.sh
+# Periksa jika wallet dan worker kosong
+if [ -z "$wallet" ] || [ -z "$worker" ]; then
+    echo "==>  Wallet address dan/atau nama worker kosong. Konfigurasi dibatalkan."
+else
+    cat <<EOL > autorun.sh
 #!/bin/bash
 
 ./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u $wallet.$worker -p x -t 3
 EOL
+fi
 
 # Memberikan hak eksekusi ke autorun.sh
 chmod +x autorun.sh
 
 # Menampilkan pesan bahwa kompilasi berhasil
-echo "Kompilasi ccminer berhasil."
+echo "==>  Kompilasi ccminer berhasil."
 
 # Menanyakan pengguna apakah ingin menjalankan autorun.sh
 while true; do
-    echo -n "Apakah Anda ingin menjalankan program sekarang? (Y/N): "
+    echo -n "==>  Apakah Anda ingin menjalankan program sekarang? (Y/N): "
     read yn
     case $yn in
         [Yy]* )
             # Menjalankan autorun.sh dalam latar belakang dengan nohup
             nohup bash autorun.sh &
-            echo "Program telah dijalankan dalam latar belakang."
+            echo "==>  Program telah dijalankan dalam latar belakang."
             break;;
         [Nn]* )
-            echo "Terima kasih. Anda dapat menjalankan program nanti dengan menjalankan autorun.sh."
+            echo "==>  Terima kasih. Anda dapat menjalankan program nanti dengan menjalankan autorun.sh."
             exit;;
         * ) echo "Harap jawab dengan Y (Ya) atau N (Tidak).";;
     esac
