@@ -49,6 +49,6 @@ set +e
 
 if ! grep -q 'export PATH="$PATH:$HOME/.local"' "$HOME/.bashrc"; then
     # Jika tidak ada, tambahkan PATH tersebut ke .bashrc
-    echo 'export PATH="$PATH:$HOME/.local"' >> "$HOME/.bashrc"
+    echo 'export PATH="$PATH:$HOME/.local:$HOME/.local/bin"' >> "$HOME/.bashrc"
     echo "PATH ke \$HOME/.local ditambahkan ke .bashrc."
 fi
