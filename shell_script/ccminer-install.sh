@@ -33,13 +33,13 @@ arch=$(uname -m)
 
 # Menentukan URL repositori GitHub berdasarkan arsitektur
 if [[ "$arch" == "aarch64" || "$arch" == "armv7l" ]]; then
-    github_url="https://github.com/monkins1010/ccminer/tree/ARM"
+    branch="ARM"
 elif [[ "$arch" == "x86_64" ]]; then
-    github_url="https://github.com/monkins1010/ccminer/tree/Verus2.2"
+    branch="Verus2.2"
 fi
 
 # Mengunduh dan menginstal ccminer dari branch yang sesuai
-git clone $github_url ccminer
+git clone --single-branch -b $branch https://github.com/monkins1010/ccminer.git
 cd ccminer
 
 # Menjalankan build.sh, dan jika ada kesalahan, keluar dengan pesan kesalahan
