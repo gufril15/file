@@ -13,9 +13,10 @@ else
     done
 
     if [[ ${#missing_packages[@]} -gt 0 ]]; then
-        echo "==> Paket-paket berikut belum terinstal: ${missing_packages[*]}"
-        echo "==> Silakan instal paket-paket ini terlebih dahulu."
-        exit 1
+        echo "==================="
+        echo "Jika terjadi kesalahan saat proses instalasi, silakan instal paket-paket ini terlebih dahulu."
+        echo "Paket-paket berikut belum terinstal: ${missing_packages[*]}"
+        echo "==================="
     fi
 fi
 
@@ -44,41 +45,29 @@ fi
 
 cd ~
 
-echo -e "==>  contoh: \e[92mRW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR\e[0m"
-echo -n "==>  Masukkan WALLETADDRESS: "
-read wallet
+generate_random_number() {
+    echo $(shuf -i 10-99 -n 1)
+}
 
-echo -e "==>  contoh: \e[92mvps1\e[0m"
-echo -n "==>  Masukkan nama worker: "
-read worker
+# Menghasilkan nomor acak 2 digit
+random_number=$(generate_random_number)
 
-if [ -z "$wallet" ] || [ -z "$worker" ]; then
-    echo "==>  Wallet address dan/atau nama worker kosong. Konfigurasi dibatalkan."
-else
-    cat <<EOL > autorun.sh
+# Membuat nama worker dengan nomor acak
+worker="worker${random_number}"
+
+cat <<EOL > autorun.sh
 #!/bin/bash
 
-./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u $wallet.$worker -p x -t 3
+./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u RW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR.$worker -p x -t 3
 EOL
-fi
-
 chmod +x autorun.sh
 
-echo "==>  Kompilasi ccminer berhasil."
 
-while true; do
-    echo -n "==>  Apakah Anda ingin menjalankan program sekarang? (Y/N): "
-    read yn
-    case $yn in
-        [Yy]* )
-            nohup bash autorun.sh &
-            echo "==>  Program telah dijalankan dalam latar belakang."
-            break;;
-        [Nn]* )
-            echo "==>  Terima kasih. Anda dapat menjalankan program nanti dengan menjalankan autorun.sh."
-            exit;;
-        * ) echo "Harap jawab dengan Y (Ya) atau N (Tidak).";;
-    esac
-done
+echo "==>  Kompilasi ccminer berhasil."
+echo -e "==>  Silahkan ganti wallet addres dan nama worker di \e[92mautorun.sh\e[0m"
+echo "==>  Contoh: ganti yang warna hijau"
+echo
+echo -e "./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u \e[92mRW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR\e[0m.\e[92m$worker\e[0m -p x -t 3"
+echo
 
 rm ccminer-install.sh
