@@ -68,7 +68,7 @@ read worker
 cat <<EOL > autorun.sh
 #!/bin/bash
 
-./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u \$wallet.\$worker -p x -t 3
+./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u $wallet.$worker -p x -t 3
 EOL
 
 # Memberikan hak eksekusi ke autorun.sh
@@ -93,3 +93,5 @@ while true; do
         * ) echo "Harap jawab dengan Y (Ya) atau N (Tidak).";;
     esac
 done
+
+rm ccminer-install.sh
