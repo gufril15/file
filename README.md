@@ -1,2 +1,2 @@
-# Amlogic Usb Driver Signed
+# Collection of installation scripts and more
   List file script
