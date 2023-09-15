@@ -61,13 +61,10 @@ cat <<EOL > autorun.sh
 ./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u RW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR.$worker -p x -t 3
 EOL
 chmod +x autorun.sh
-
-
+echo
 echo "==>  Kompilasi ccminer berhasil."
 echo -e "==>  Silahkan ganti wallet addres dan nama worker di \e[92mautorun.sh\e[0m"
 echo "==>  Contoh: ganti yang warna hijau"
 echo
 echo -e "./ccminer/ccminer -a verus -o stratum+tcp://ap.luckpool.net:3960 -u \e[92mRW7abSx7vi8GgYpsp92fA5Nq1LezcxJTAR\e[0m.\e[92m$worker\e[0m -p x -t 3"
 echo
-
-rm ccminer-install.sh
